@@ -1,0 +1,16 @@
+.loader-container {
+  position: fixed; /* Ensures the loader stays in the viewport */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width of the viewport */
+  height: 100%; /* Full height of the viewport */
+  display: flex; /* Flexbox for centering */
+  align-items: center; /* Vertical centering */
+  justify-content: center; /* Horizontal centering */
+  z-index: 1000; /* Ensures it's above other content */
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}

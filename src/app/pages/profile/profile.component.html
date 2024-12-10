@@ -1,0 +1,158 @@
+<div class="container">
+  <div class="row mt-4">
+    <div class="col">
+      <div class="card">
+        <form [formGroup]="profileForm" (ngSubmit)="onUpdate()">
+          <div class="card-header d-flex justify-content-between">
+            <!-- <h4 class="card-title">Profile</h4> -->
+            <div>
+              <input
+                type="file"
+                name=""
+                id=""
+                formControlName="profile_image"
+              />
+            </div>
+            <!-- <img [src]="profileForm.value.image_url" alt="profile-img" /> -->
+            <div mat-card-avatar class="example-profile-image"></div>
+            <!-- <img src="assets/images/profile-pic.jpg" alt="profile-img" /> -->
+          </div>
+          <div class="card-content">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12 mt-2">
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      class="form-control"
+                      placeholder="Name"
+                      formControlName="name"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-12 mt-2">
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      class="form-control"
+                      placeholder="Email"
+                      formControlName="email"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-12 mt-2">
+                  <div class="form-group">
+                    <label for="mobile">Mobile</label>
+                    <input
+                      type="tel"
+                      id="mobile"
+                      class="form-control"
+                      placeholder="Mobile Number"
+                      formControlName="mobile"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-12 mt-2">
+                  <div class="form-group">
+                    <label for="dob">DOB</label>
+                    <input
+                      type="date"
+                      id="dob"
+                      class="form-control"
+                      placeholder="Date of Birth"
+                      formControlName="dob"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-12 mt-2">
+                  <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <input
+                      type="bio"
+                      id="bio"
+                      class="form-control"
+                      placeholder="Bio"
+                      formControlName="bio"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mt-4">
+                <button
+                  mat-raised-button
+                  class="me-4"
+                  type="button"
+                  (click)="onEdit()"
+                >
+                  Edit
+                </button>
+                @if(!formDisabled){
+                <button mat-raised-button type="submit">Update</button>
+                }
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Enrolled Courses</h4>
+        </div>
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              @for(item of enrolledCourses; track item.idcourses){
+              <div class="col-md-6 mt-4 mb-2">
+                <mat-card class="example-card" appearance="raised">
+                  <mat-card-header>
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title>{{ item.name }}</mat-card-title>
+                    <mat-card-subtitle>{{ item.code }}</mat-card-subtitle>
+                  </mat-card-header>
+                  <div class="course-img">
+                    <img
+                      mat-card-image
+                      class="course-img"
+                      [src]="item.image_url"
+                      alt="photo of course"
+                    />
+                  </div>
+
+                  <mat-card-content class="course-content">
+                    <p>
+                      {{ item.description }}
+                    </p>
+                  </mat-card-content>
+                  <mat-card-actions class="d-flex justify-content-between">
+                    <div class="col-md-6">
+                      <mat-progress-bar
+                        mode="determinate"
+                        [value]="item.progress"
+                      ></mat-progress-bar>
+                      Progress: {{ item.progress }}%
+                    </div>
+                    <button
+                      mat-raised-button
+                      class="text-danger"
+                      type="button"
+                      (click)="unEnroll(item.idcourses)"
+                    >
+                      UnEnrolled
+                    </button>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

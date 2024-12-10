@@ -1,0 +1,40 @@
+@if(courseDetails){
+<div class="container">
+  <div class="row mt-4">
+    <div class="d-flex justify-content-end">
+      <button mat-raised-button (click)="onEnroll(courseDetails.course_id)">Enrolled</button>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <img
+        [src]="courseDetails.image_url"
+        alt="photo of course"
+        class="img-fluid"
+      />
+    </div>
+    <div class="col-md-8">
+      <h3>{{ courseDetails.course_name }}</h3>
+      <p>
+        {{ courseDetails.description }}
+      </p>
+      <div class="d-flex justify-content-between">
+        <div class="text-warning">Rating: {{ courseDetails.rating }}</div>
+        <div class="text-success">Price: ${{ courseDetails.price }}</div>
+      </div>
+      <div class="text-primary mt-2">Instructor:</div>
+      <div>{{ courseDetails.teacher_name }}</div>
+      <div>Education: {{ courseDetails.edu_qualification }}</div>
+      <div>
+        Mobile:
+        {{ courseDetails.mobile }}
+      </div>
+    </div>
+  </div>
+</div>
+
+} @else {
+<div class="loader-container">
+  <mat-spinner size="small"></mat-spinner>
+</div>
+}
