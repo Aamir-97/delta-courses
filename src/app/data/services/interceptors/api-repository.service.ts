@@ -83,22 +83,25 @@ export class ApiRepositoryService {
   updateDataRepository(
     apiPath: string,
     id: number,
-    data: any
+    data: any,
+    params?: HttpParams
   ): Observable<any> {
     return new Observable((observer) => {
       try {
-        this.http.put<any>(this.baseUrl + apiPath + `/${id}`, data).subscribe({
-          // tslint:disable-next-line: no-shadowed-variable
-          next: (data) => {
-            observer.next(data);
-            observer.complete();
-          },
-          // tslint:disable-next-line: no-shadowed-variable
-          error: (error: HttpErrorResponse) => {
-            observer.error(error);
-            observer.complete();
-          },
-        });
+        this.http
+          .put<any>(this.baseUrl + apiPath + `/${id}`, data, { params: params })
+          .subscribe({
+            // tslint:disable-next-line: no-shadowed-variable
+            next: (data) => {
+              observer.next(data);
+              observer.complete();
+            },
+            // tslint:disable-next-line: no-shadowed-variable
+            error: (error: HttpErrorResponse) => {
+              observer.error(error);
+              observer.complete();
+            },
+          });
       } catch (error) {
         observer.error(error);
         observer.complete();

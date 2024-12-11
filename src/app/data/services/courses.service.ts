@@ -37,4 +37,14 @@ export class CoursesService {
       userIdData
     );
   }
+
+  updateProgress(courseId: number, userId: number, progressData: any) {
+    const params = new HttpParams().set('userId', userId);
+    return this.apiRepositoryService.updateDataRepository(
+      this.apiPath + '/progress',
+      courseId,
+      progressData,
+      params
+    );
+  }
 }

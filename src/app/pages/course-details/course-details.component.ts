@@ -4,7 +4,10 @@ import { CoursesService } from '../../data/services/courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { loggedInUserId } from '../../app.component';
 import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module';
-import { CourseDetailModel } from '../../data/models/course.model';
+import {
+  CourseByUserIdModel,
+  CourseDetailModel,
+} from '../../data/models/course.model';
 
 @Component({
   selector: 'app-course-details',
@@ -28,11 +31,16 @@ export class CourseDetailsComponent {
 
   courseDetails: CourseDetailModel;
   userId: number = loggedInUserId;
+  isCourseEnrolled: boolean = false;
+  enrolledCourses: CourseByUserIdModel[] = [];
+  enrolledCourseDetails: CourseByUserIdModel;
+  progressValue: number = 0;
 
   getCourseDetailById(courseId: number) {
     this.courseService.getCourseById(courseId).subscribe({
       next: (value) => {
         this.courseDetails = value.courses[0];
+        this.getEnrolledCourses(this.userId);
       },
       error: (err) => {
         this.openSnackBar('', 'close');
@@ -55,8 +63,49 @@ export class CourseDetailsComponent {
         this.openSnackBar('Enrolled successfully', 'close');
       },
       error: (err) => {
-        this.openSnackBar('Error enrolling', 'close');
+        console.log(err.error);
+        this.openSnackBar(err.error.error, 'close');
       },
     });
+  }
+
+  getEnrolledCourses(userId: number) {
+    this.courseService.getEnrolledCourses(userId).subscribe({
+      next: (data) => {
+        this.enrolledCourses = data.courses;
+        this.checkForEnrollment();
+      },
+      error: (err) => {
+        this.openSnackBar(err.error.error, 'Close');
+      },
+    });
+  }
+
+  checkForEnrollment() {
+    return this.enrolledCourses.map((course) => {
+      if (this.courseDetails.idcourses === course.idcourses) {
+        this.isCourseEnrolled = true;
+        this.enrolledCourseDetails = course;
+        this.progressValue = course.progress;
+        return;
+      }
+    });
+  }
+
+  updateProgress() {
+    const progressData = {
+      progress: this.progressValue,
+    };
+    this.courseService
+      .updateProgress(this.courseDetails.idcourses, this.userId, progressData)
+      .subscribe({
+        next: (data) => {
+          this.getCourseDetailById(this.courseDetails.idcourses);
+          this.openSnackBar('Progress updated successfully', 'Close');
+        },
+        error: (err) => {
+          this.openSnackBar(err.error.error, 'Close');
+        },
+      });
   }
 }

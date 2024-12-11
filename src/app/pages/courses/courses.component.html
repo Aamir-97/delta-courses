@@ -1,4 +1,10 @@
 <div class="container">
+    <div class="row">
+        
+    </div>
+</div>
+
+<div class="container">
   <div class="row">
     @for(item of allCourses; track item.idcourses){
     <div class="col-md-3 mt-4 mb-2">
@@ -23,9 +29,18 @@
           </p>
         </mat-card-content>
         <mat-card-actions class="d-flex justify-content-between">
-          <a routerLink="details" [queryParams]="{ id: item.idcourses }">
-            Show more...
-          </a>
+          <button
+            mat-raised-button
+            type="button"
+            routerLink="details"
+            [queryParams]="{ id: item.idcourses }"
+            class="text-primary"
+          >
+            Show More
+          </button>
+          <!-- <a routerLink="details" [queryParams]="{ id: item.idcourses }">
+            Show More
+          </a> -->
           <div class="d-flex align-items-end">
             <div class="text-warning">Rating: {{ item.rating }}</div>
             <div class="ms-2">Price: ${{ item.price }}</div>

@@ -2,16 +2,59 @@
 <div class="container">
   <div class="row mt-4">
     <div class="d-flex justify-content-end">
-      <button mat-raised-button (click)="onEnroll(courseDetails.course_id)">Enrolled</button>
+      @if(isCourseEnrolled){
+      <div class="col-md-6">
+        <form class="example-form">
+          <mat-form-field class="example-full-width" appearance="outline" size>
+            <mat-label>Progress Value</mat-label>
+            <input
+              matInput
+              name="progressValue"
+              placeholder="Type 1-100"
+              [(ngModel)]="progressValue"
+              min="1"
+              max="100"
+              type="number"
+            />
+          </mat-form-field>
+          <button mat-raised-button type="submit" class="ms-4" (click)="updateProgress()">
+            Update Progress
+          </button>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <div class="d-flex">
+          <div class="col-md-8 d-flex align-items-center">
+            <mat-progress-bar
+              mode="determinate"
+              [value]="enrolledCourseDetails.progress"
+            ></mat-progress-bar>
+          </div>
+          <div class="col-md-4 ms-2">
+            Progress: {{ enrolledCourseDetails.progress }}%
+          </div>
+        </div>
+      </div>
+      } @else {
+      <button
+        mat-raised-button
+        (click)="onEnroll(courseDetails.idcourses)"
+        class="text-primary"
+      >
+        Enrolled
+      </button>
+      }
     </div>
   </div>
   <div class="row mt-4">
     <div class="col-md-4">
-      <img
-        [src]="courseDetails.image_url"
-        alt="photo of course"
-        class="img-fluid"
-      />
+      <div class="card">
+        <img
+          [src]="courseDetails.image_url"
+          alt="photo of course"
+          class="img-fluid"
+        />
+      </div>
     </div>
     <div class="col-md-8">
       <h3>{{ courseDetails.course_name }}</h3>

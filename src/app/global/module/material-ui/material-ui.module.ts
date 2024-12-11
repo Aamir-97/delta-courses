@@ -8,6 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [],
@@ -15,13 +17,16 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   exports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatInputModule,
+    FormsModule,
   ],
 })
 export class MaterialUiModule {}

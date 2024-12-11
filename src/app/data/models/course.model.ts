@@ -6,22 +6,8 @@ export interface CoursesModel {
   price: string;
   description: string;
   image_url: string | null;
+  category: string;
 }
-
-// export interface CourseDetailModel {
-//   idcourses: number;
-//   name: string;
-//   code: string;
-//   rating: string;
-//   price: string;
-//   description: string;
-//   image_url: string;
-//   idteacher: number;
-//   nic: string;
-//   mobile: string;
-//   edu_qualification: string;
-//   course_id: number;
-// }
 
 export interface CourseDetailModel {
   idcourses: number;
