@@ -4,7 +4,6 @@
       <div class="card">
         <form [formGroup]="profileForm" (ngSubmit)="onUpdate()">
           <div class="card-header d-flex justify-content-between">
-            <!-- <h4 class="card-title">Profile</h4> -->
             <div>
               <input
                 type="file"
@@ -13,9 +12,7 @@
                 formControlName="profile_image"
               />
             </div>
-            <!-- <img [src]="profileForm.value.image_url" alt="profile-img" /> -->
             <div mat-card-avatar class="example-profile-image"></div>
-            <!-- <img src="assets/images/profile-pic.jpg" alt="profile-img" /> -->
           </div>
           <div class="card-content">
             <div class="card-body">
@@ -108,7 +105,11 @@
           <div class="container">
             <div class="row">
               @for(item of enrolledCourses; track item.idcourses){
-              <div class="col-md-6 mt-4 mb-2">
+              <div
+                class="col-md-6 mt-4 mb-2 clickable"
+                routerLink="../courses/details"
+                [queryParams]="{ id: item.idcourses }"
+              >
                 <mat-card class="example-card" appearance="raised">
                   <mat-card-header>
                     <div mat-card-avatar class="example-header-image"></div>
@@ -143,7 +144,7 @@
                       type="button"
                       (click)="unEnroll(item.idcourses)"
                     >
-                      UnEnrolled
+                      UnEnroll
                     </button>
                   </mat-card-actions>
                 </mat-card>

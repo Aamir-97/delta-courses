@@ -24,12 +24,12 @@ export class AppComponent {
 
 export const Environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:3000',
+  apiBaseUrl: 'http://localhost',
 };
 
 export function setEnvironment(hostedDomain: string) {
   if (hostedDomain.includes('localhost')) {
-    Environment.apiBaseUrl = 'http://localhost:3000/api/';
+    Environment.apiBaseUrl = 'http://localhost/api/';
   } else {
     Environment.apiBaseUrl = hostedDomain + '/api/';
   }

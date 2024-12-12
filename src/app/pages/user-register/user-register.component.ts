@@ -1,7 +1,7 @@
 import { ProfileService } from './../../data/services/profile.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MaterialUiModule } from './../../global/module/material-ui/material-ui.module';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 
@@ -19,6 +19,9 @@ export class UserRegisterComponent {
     private router: Router
   ) {}
 
+  @ViewChild('password') password: ElementRef;
+  @ViewChild('confirmPassword') confirmPassword: ElementRef;
+
   showPassword: boolean = false;
   loaderVisible: boolean = false;
   errorMessage: string = '';
@@ -32,6 +35,13 @@ export class UserRegisterComponent {
 
   myFunction() {
     this.showPassword = !this.showPassword;
+    if (this.showPassword) {
+      this.password.nativeElement.type = 'text';
+      this.confirmPassword.nativeElement.type = 'text';
+    } else {
+      this.password.nativeElement.type = 'password';
+      this.confirmPassword.nativeElement.type = 'password';
+    }
   }
 
   onSubmit() {

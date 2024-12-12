@@ -1,36 +1,27 @@
-import { Component, Type } from '@angular/core';
-// import { ChartOptions, ChartData, ChartConfiguration } from 'chart.js';
-// import { BaseChartDirective, ThemeService } from 'ng2-charts';
+import { ChangeDetectorRef, Component, Type } from '@angular/core';
 import { Theme } from '../../global/shared/theme.model';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
 import { DashboardService } from '../../data/services/dashboard.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-// import { NgChartsModule } from 'ng2-charts';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  // imports: [BaseChartDirective],
   imports: [NgChartsModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
-  // constructor(private themeService: ThemeService) {}
-  // public barChartOptions: ChartOptions<'line'> = {
-  //   responsive: false,
-  // };
-
   constructor(
     private dashboardService: DashboardService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private cdf: ChangeDetectorRef
   ) {}
 
   public lineChartLegend = true;
 
   ngOnInit() {
-    // this.barChartOptions = this.themeService.getColorschemesOptions();
     this.getCouresEnrolled();
     this.getUserCourseProgress();
   }
@@ -46,12 +37,22 @@ export class DashboardComponent {
         const enrolledCourses = response.courses.map((course: any) => {
           return course.course_name;
         });
-
         const enrolledCoursesCount = response.courses.map((course: any) => {
           return course.enrolled_user_count;
         });
-        this.barChartData.labels = enrolledCourses;
-        this.barChartData.datasets[0].data = enrolledCoursesCount;
+        this.barChartData = {
+          ...this.barChartData, // Spread operator to preserve other properties
+          labels: enrolledCourses,
+          datasets: [
+            {
+              ...this.barChartData.datasets[0],
+              data: enrolledCoursesCount,
+            },
+          ],
+        };
+        // this.barChartData.labels = enrolledCourses;
+        // this.barChartData.datasets[0].data = enrolledCoursesCount;
+        this.cdf.detectChanges();
       },
       error: (error) => {
         this.openSnackBar(error.error.error, 'Close');
@@ -66,9 +67,6 @@ export class DashboardComponent {
         const uniqueCourseNames = [
           ...new Set(response.courses.map((course: any) => course.course_name)),
         ];
-        // const courseProgress = response.courses.map((course: any) => {
-        //   return course.course_progress;
-        // });
 
         // Group data by user_name
         const groupedData = response.courses.reduce((acc: any, course: any) => {
@@ -90,101 +88,20 @@ export class DashboardComponent {
 
           return acc;
         }, []);
-
-        // const courseProgressCount = response.courses.map((course: any) => {
-        //   return course.enrolled_user_count;
-        // });
-        this.lineChartData.labels = uniqueCourseNames;
-        this.lineChartData.datasets = groupedData;
+        this.lineChartData = {
+          ...this.barChartData, // Spread operator to preserve other properties
+          labels: uniqueCourseNames,
+          datasets: groupedData,
+        };
+        // this.lineChartData.labels = uniqueCourseNames;
+        // this.lineChartData.datasets = groupedData;
+        this.cdf.detectChanges();
       },
       error: (error) => {
         this.openSnackBar(error.error.error, 'Close');
       },
     });
   }
-
-  // public set selectedTheme(value) {
-  //   this._selectedTheme = value;
-  //   let overrides: ChartOptions;
-  //   if (this.selectedTheme === 'dark-theme') {
-  //     overrides = {
-  //       plugins: {
-  //         legend: {
-  //           labels: { color: 'white' },
-  //         },
-  //       },
-  //       scales: {
-  //         x: {
-  //           ticks: { color: 'white' },
-  //           grid: { color: 'rgba(255,255,255,0.1)' },
-  //         },
-  //         y: {
-  //           ticks: { color: 'white' },
-  //           grid: { color: 'rgba(255,255,255,0.1)' },
-  //         },
-  //       },
-  //     };
-  //   } else {
-  //     overrides = {};
-  //   }
-  //   this.themeService.setColorschemesOptions(overrides);
-  // }
-
-  // setCurrentTheme(theme: Theme) {
-  //   this.selectedTheme = theme;
-  // }
-
-  // public lineChartData: ChartConfiguration<'line'>['data'] = {
-  //   labels: [
-  //     'January',
-  //     'February',
-  //     'March',
-  //     'April',
-  //     'May',
-  //     'June',
-  //     'July',
-  //     'August',
-  //     'September',
-  //     'October',
-  //     'November',
-  //     'December',
-  //   ],
-
-  //   datasets: [
-  //     {
-  //       data: [40, 45, 50, 55, 60, 65, 70, 75, 70, 60, 50, 45],
-  //       label: 'Angular',
-  //       fill: true,
-  //       tension: 0.5,
-  //       borderColor: 'black',
-  //       backgroundColor: 'rgba(255,0,0,0.3)',
-  //     },
-
-  //     {
-  //       data: [45, 50, 60, 70, 75, 65, 50, 60, 55, 50, 45, 45],
-  //       label: 'React',
-  //       fill: true,
-  //       tension: 0.5,
-  //       borderColor: 'black',
-  //       backgroundColor: 'rgba(0,255,0,0.3)',
-  //     },
-  //   ],
-  // };
-
-  // datasets: ChartData<'bar', { key: string; value: number }[]> = {
-  //   datasets: [
-  //     {
-  //       data: [
-  //         { key: 'Sales', value: 20 },
-  //         { key: 'Revenue', value: 10 },
-  //       ],
-  //       parsing: {
-  //         xAxisKey: 'key',
-  //         yAxisKey: 'value',
-  //       },
-  //     },
-  //   ],
-  // };
 
   // Line Chart Configuration
   public lineChartData: ChartConfiguration<'line'>['data'] = {
@@ -194,8 +111,6 @@ export class DashboardComponent {
         data: [65, 59, 80, 81, 56, 55],
         label: 'Course Dataset',
         borderColor: 'blue',
-        backgroundColor: 'rgba(0, 0, 255, 0.3)',
-        fill: true,
       },
     ],
   };
@@ -206,7 +121,7 @@ export class DashboardComponent {
 
   // Bar Chart Configuration
   public barChartData: ChartConfiguration<'bar'>['data'] = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: [],
     datasets: [
       {
         data: [12, 19, 3, 5, 2, 3],

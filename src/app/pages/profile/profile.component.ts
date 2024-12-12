@@ -8,11 +8,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CoursesService } from '../../data/services/courses.service';
 import { CourseByUserIdModel } from '../../data/models/course.model';
 import { AuthService } from '../../data/services/interceptors/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [MaterialUiModule],
+  imports: [MaterialUiModule, RouterLink],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })

@@ -24,6 +24,10 @@
 }
 
 .example-profile-image {
-  background-image: url("../../../assets/images/profile-pic.jpg");
+  background-image: url("../../../assets/images/profile-pic.png");
   background-size: cover;
+}
+
+.clickable {
+  cursor: pointer;
 }
