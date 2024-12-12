@@ -29,4 +29,8 @@ export class ProfileService {
       data
     );
   }
+
+  saveUser(data: any) {
+    return this.apiRepositoryServices.saveDataRepository(this.apiPath, data);
+  }
 }

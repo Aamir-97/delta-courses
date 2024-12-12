@@ -1,7 +1,44 @@
 <div class="container">
-    <div class="row">
-        
+  <div class="row mt-4">
+    <div class="col">
+      <div class="form-group">
+        <label for="search">Search</label>
+        <input
+          type="text"
+          name="search"
+          class="form-control"
+          placeholder="type to search"
+          (input)="searchCourse($event)"
+        />
+      </div>
     </div>
+    <div class="col">
+      <div>Filter By:</div>
+
+      <input
+        type="checkbox"
+        name="all"
+        value="all"
+        (input)="filterCourses($event)"
+      />
+      <label for="it">All</label>
+      <br />
+      <input
+        type="checkbox"
+        name="it"
+        value="it"
+        (input)="filterCourses($event)"
+      />
+      <label for="it">IT Cources</label><br />
+      <input
+        type="checkbox"
+        name="accounts"
+        value="accounts"
+        (input)="filterCourses($event)"
+      />
+      <label for="it">Accounts Cources</label>
+    </div>
+  </div>
 </div>
 
 <div class="container">

@@ -4,6 +4,8 @@ import { Component, Type } from '@angular/core';
 import { Theme } from '../../global/shared/theme.model';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
+import { DashboardService } from '../../data/services/dashboard.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 // import { NgChartsModule } from 'ng2-charts';
 
 @Component({
@@ -20,15 +22,85 @@ export class DashboardComponent {
   //   responsive: false,
   // };
 
+  constructor(
+    private dashboardService: DashboardService,
+    private snackBar: MatSnackBar
+  ) {}
+
   public lineChartLegend = true;
 
   ngOnInit() {
     // this.barChartOptions = this.themeService.getColorschemesOptions();
+    this.getCouresEnrolled();
+    this.getUserCourseProgress();
   }
 
   private _selectedTheme: Theme = 'light-theme';
   public get selectedTheme() {
     return this._selectedTheme;
+  }
+
+  getCouresEnrolled() {
+    this.dashboardService.getCoursesEnrolled().subscribe({
+      next: (response) => {
+        const enrolledCourses = response.courses.map((course: any) => {
+          return course.course_name;
+        });
+
+        const enrolledCoursesCount = response.courses.map((course: any) => {
+          return course.enrolled_user_count;
+        });
+        this.barChartData.labels = enrolledCourses;
+        this.barChartData.datasets[0].data = enrolledCoursesCount;
+      },
+      error: (error) => {
+        this.openSnackBar(error.error.error, 'Close');
+      },
+    });
+  }
+
+  getUserCourseProgress() {
+    this.dashboardService.getUserCourseProgerss().subscribe({
+      next: (response) => {
+        // Extract unique course names
+        const uniqueCourseNames = [
+          ...new Set(response.courses.map((course: any) => course.course_name)),
+        ];
+        // const courseProgress = response.courses.map((course: any) => {
+        //   return course.course_progress;
+        // });
+
+        // Group data by user_name
+        const groupedData = response.courses.reduce((acc: any, course: any) => {
+          // Find if user already exists in accumulator
+          const existingUser = acc.find(
+            (user: any) => user.label === course.user_name
+          );
+
+          if (existingUser) {
+            // Add progress to existing user data
+            existingUser.data.push(course.progress);
+          } else {
+            // Create new user data with course progress
+            acc.push({
+              label: course.user_name,
+              data: [course.progress],
+            });
+          }
+
+          return acc;
+        }, []);
+
+        // const courseProgressCount = response.courses.map((course: any) => {
+        //   return course.enrolled_user_count;
+        // });
+        this.lineChartData.labels = uniqueCourseNames;
+        this.lineChartData.datasets = groupedData;
+      },
+      error: (error) => {
+        this.openSnackBar(error.error.error, 'Close');
+      },
+    });
   }
 
   // public set selectedTheme(value) {
@@ -120,13 +192,14 @@ export class DashboardComponent {
     datasets: [
       {
         data: [65, 59, 80, 81, 56, 55],
-        label: 'Dataset 1',
+        label: 'Course Dataset',
         borderColor: 'blue',
         backgroundColor: 'rgba(0, 0, 255, 0.3)',
         fill: true,
       },
     ],
   };
+
   public lineChartOptions: ChartOptions<'line'> = {
     responsive: true,
   };
@@ -137,7 +210,7 @@ export class DashboardComponent {
     datasets: [
       {
         data: [12, 19, 3, 5, 2, 3],
-        label: 'Dataset 1',
+        label: 'Enrolled Courses Dataset',
         backgroundColor: [
           'rgba(255, 99, 132, 0.6)',
           'rgba(54, 162, 235, 0.6)',
@@ -195,4 +268,10 @@ export class DashboardComponent {
   public radarChartOptions: ChartOptions<'radar'> = {
     responsive: true,
   };
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 }

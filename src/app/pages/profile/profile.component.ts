@@ -70,7 +70,7 @@ export class ProfileComponent {
 
     this.profileService.updateProfileData(this.userId!, profileData).subscribe({
       next: (data) => {
-        this.getProfileDetails(2);
+        this.getProfileDetails(this.userId!);
         this.openSnackBar('Profile updated successfully', 'Close');
         this.formDisabled = !this.formDisabled;
         this.profileForm.disable();
