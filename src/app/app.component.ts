@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -11,6 +11,26 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'delta-courses';
+  private hostedDomain: string;
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.hostedDomain = window.location.origin;
+      setEnvironment(this.hostedDomain);
+    }
+  }
 }
 
-export const loggedInUserId: number = 2;
+export const Environment = {
+  production: false,
+  apiBaseUrl: 'http://localhost:3000',
+};
+
+export function setEnvironment(hostedDomain: string) {
+  if (hostedDomain.includes('localhost')) {
+    Environment.apiBaseUrl = 'http://localhost:3000/api/';
+  } else {
+    Environment.apiBaseUrl = hostedDomain + '/api/';
+  }
+}

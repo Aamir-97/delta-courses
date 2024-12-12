@@ -1,0 +1,88 @@
+<div class="login-page">
+  <div class="col left-panel">
+    <img
+      src="../../../assets/images/delta-logo.jpeg"
+      alt="delta-logo"
+      class="login-uni-logo"
+    />
+    <h1 class="left-panel-text">
+      Getting your certification by just enroll it. Welcome...!
+    </h1>
+  </div>
+  <div class="col">
+    <div class="login-div">
+      <div class="login-container">
+        <h1>Sign In</h1>
+        <form
+          [formGroup]="loginForm"
+          class="login-form"
+          (ngSubmit)="onSubmit()"
+        >
+          <div class="form-group">
+            <label class="form-label">
+              Username
+              <span class="required-sign">*</span>
+            </label>
+            <input
+              #username
+              mat-input
+              formControlName="username"
+              placeholder="username"
+              class="form-control"
+              (keydown.enter)="onSubmit()"
+              type="text"
+            />
+            <!-- <mat-error>Username is required</mat-error> -->
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Password
+              <span class="required-sign">*</span>
+            </label>
+            <input
+              #password
+              mat-input
+              id="password"
+              formControlName="password"
+              placeholder="Password"
+              class="form-control"
+              type="password"
+              (keydown.enter)="onSubmit()"
+            />
+            <mat-checkbox
+              [checked]="showPassword"
+              (click)="myFunction()"
+            >
+              Show Password
+            </mat-checkbox>
+
+            <!-- <mat-error>Password is required</mat-error> -->
+          </div>
+
+          <button type="submit" mat-raised-button class="bg-dark text-light">
+            Login
+          </button>
+        </form>
+        @if(loaderVisible){
+        <mat-spinner size="small"> </mat-spinner>
+        }
+
+        <p class="login-failed-msg">
+          {{ errorMessage }}
+        </p>
+        <a class="text" routerLink="/user-register">
+          New User? Create an account
+        </a>
+      </div>
+
+      <div class="link-container">
+        <div class="link-text">Version: {{ appVersion }}</div>
+        <a href="https://www.linkedin.com/in/aamir-ali-shaf/" class="link-text">
+          LinkedIn
+        </a>
+        <a href="https://github.com/Aamir-97" class="link-text"> Github </a>
+      </div>
+    </div>
+  </div>
+</div>

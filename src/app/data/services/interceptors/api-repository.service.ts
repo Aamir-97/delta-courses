@@ -5,6 +5,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Environment } from '../../../app.component';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ import { Observable } from 'rxjs';
 export class ApiRepositoryService {
   constructor(private http: HttpClient) {}
 
-  baseUrl = 'http://localhost:3000/api/';
+  baseUrl = Environment.apiBaseUrl;
 
   getAllDataRepository(apiPath: string, params: HttpParams): Observable<any> {
     return new Observable((observer) => {

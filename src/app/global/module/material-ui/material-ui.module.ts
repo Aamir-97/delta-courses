@@ -10,6 +10,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [],
@@ -27,6 +28,7 @@ import { FormsModule } from '@angular/forms';
     MatProgressSpinnerModule,
     MatInputModule,
     FormsModule,
+    MatCheckboxModule,
   ],
 })
 export class MaterialUiModule {}

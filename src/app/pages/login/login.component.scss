@@ -1,0 +1,132 @@
+$primaryBlack: black;
+$primaryGreen: #008751;
+$formLableTextColor: #505050;
+
+* {
+  box-sizing: border-box;
+}
+
+.login-page {
+  display: flex;
+  height: 100%;
+  width: 100vw;
+}
+
+.left-panel {
+  background-color: $primaryBlack;
+  opacity: 0.9;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: space-between;
+}
+
+.login-uni-logo {
+  width: 40%;
+  height: auto;
+  text-align: center;
+}
+
+h1.left-panel-text {
+  margin-top: 10%;
+  color: aliceblue;
+}
+
+.login-div {
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  height: 100%;
+}
+
+// Page top label
+
+.page-label {
+  text-align: center;
+  font-size: xx-large;
+  color: $primaryBlack;
+  margin-bottom: 0.5em;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 75%;
+  width: 75%;
+  padding: 2em;
+  margin: 2em;
+  box-shadow: 0px 1px 20px #0000001a;
+  border-radius: 12px;
+  opacity: 1;
+}
+
+.login-form {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.required-sign {
+  color: red;
+}
+
+.text {
+  text-align: center;
+//   text-decoration: none;
+//   color: $primaryBlack;
+  font-size: 14px;
+}
+
+.link-container {
+  width: 75%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.link-text {
+  position: relative;
+  text-align: center;
+//   text-decoration: none;
+//   font: normal normal normal 14px/19px "Open Sans";
+//   letter-spacing: 0px;
+//   color: #959595;
+//   opacity: 1;
+}
+
+.login-button {
+  margin: auto;
+  //   margin-top: 1em;
+  width: 50%;
+  background-color: $primaryBlack;
+  color: white;
+}
+
+.login-failed-msg {
+  height: 20px;
+  color: red;
+  font-size: small;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .left-panel {
+    display: none;
+  }
+
+  .login-container {
+    width: 80%;
+    padding: 1em;
+    margin: 1em;
+  }
+}

@@ -10,6 +10,8 @@ import {
   withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
+// import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+// import { BarController, Colors, Legend } from 'chart.js';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,5 +22,7 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([]),
       withInterceptorsFromDi()
     ),
+    // provideCharts(withDefaultRegisterables()),
+    // provideCharts({ registerables: [BarController, Legend, Colors] }),
   ],
 };

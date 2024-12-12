@@ -6,8 +6,8 @@ import { formatDate } from '@angular/common';
 import { ProfileSaveModel } from '../../data/models/profile.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CoursesService } from '../../data/services/courses.service';
-import { loggedInUserId } from '../../app.component';
 import { CourseByUserIdModel } from '../../data/models/course.model';
+import { AuthService } from '../../data/services/interceptors/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -20,12 +20,19 @@ export class ProfileComponent {
   constructor(
     private profileService: ProfileService,
     private coursesService: CoursesService,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    private authService: AuthService
+  ) {
+    this.userId = this.authService.getUserId();
+    if (this.userId) {
+      this.getProfileDetails(this.userId);
+      this.getEnrolledCourses(this.userId);
+    }
+  }
 
   formDisabled: boolean = true;
   enrolledCourses: CourseByUserIdModel[] = [];
-  userId: number = loggedInUserId;
+  userId: number | null;
 
   profileForm: FormGroup = new FormGroup({
     name: new FormControl(''),
@@ -38,8 +45,8 @@ export class ProfileComponent {
 
   ngOnInit() {
     this.profileForm.disable();
-    this.getProfileDetails(this.userId);
-    this.getEnrolledCourses(this.userId);
+    // this.getProfileDetails(this.userId);
+    // this.getEnrolledCourses(this.userId);
   }
 
   onEdit() {
@@ -61,7 +68,7 @@ export class ProfileComponent {
       profile_img: this.profileForm.value.profile_image,
     };
 
-    this.profileService.updateProfileData(this.userId, profileData).subscribe({
+    this.profileService.updateProfileData(this.userId!, profileData).subscribe({
       next: (data) => {
         this.getProfileDetails(2);
         this.openSnackBar('Profile updated successfully', 'Close');
@@ -117,7 +124,7 @@ export class ProfileComponent {
     };
     this.coursesService.unenrollCourseService(courseId, userIdData).subscribe({
       next: (data) => {
-        this.getEnrolledCourses(this.userId);
+        this.getEnrolledCourses(this.userId!);
         this.openSnackBar('Unenrolled successfully', 'Close');
       },
       error: (error) => {

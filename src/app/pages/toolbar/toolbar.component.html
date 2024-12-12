@@ -6,11 +6,14 @@
   >
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Delta Courses</span>
+  <span>Delta Courses - {{ title }}</span>
   <span class="example-spacer"></span>
-  <button mat-button routerLink="./courses">
-    <!-- <mat-icon>favorite</mat-icon> -->
-    Courses
-  </button>
-  <button mat-button routerLink="./profile">Profile</button>
+  @if(isAdmin == 1){
+  <button mat-button routerLink="./dashboard" class="text-primary">Dashboard</button>
+  } @else {
+  <button mat-button routerLink="./courses" class="text-primary">Courses</button>
+  <button mat-button routerLink="./profile" class="text-primary">Profile</button>
+  }
+
+  <button mat-button (click)="onLogout()" class="text-danger">Logout</button>
 </mat-toolbar>

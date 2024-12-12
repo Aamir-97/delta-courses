@@ -1,8 +1,8 @@
+import { AuthService } from './../../data/services/interceptors/auth.service';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CoursesService } from '../../data/services/courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { loggedInUserId } from '../../app.component';
 import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module';
 import {
   CourseByUserIdModel,
@@ -20,17 +20,19 @@ export class CourseDetailsComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private courseService: CoursesService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) {
     this.activatedRoute.queryParams.subscribe({
       next: (value) => {
         this.getCourseDetailById(value['id']!);
       },
     });
+    this.userId = this.authService.getUserId();
   }
 
   courseDetails: CourseDetailModel;
-  userId: number = loggedInUserId;
+  userId: number | null;
   isCourseEnrolled: boolean = false;
   enrolledCourses: CourseByUserIdModel[] = [];
   enrolledCourseDetails: CourseByUserIdModel;
@@ -40,7 +42,7 @@ export class CourseDetailsComponent {
     this.courseService.getCourseById(courseId).subscribe({
       next: (value) => {
         this.courseDetails = value.courses[0];
-        this.getEnrolledCourses(this.userId);
+        this.getEnrolledCourses(this.userId!);
       },
       error: (err) => {
         this.openSnackBar('', 'close');
@@ -60,10 +62,10 @@ export class CourseDetailsComponent {
     };
     this.courseService.enrollCourseService(courseId, userIdData).subscribe({
       next: (value) => {
+        this.getCourseDetailById(courseId);
         this.openSnackBar('Enrolled successfully', 'close');
       },
       error: (err) => {
-        console.log(err.error);
         this.openSnackBar(err.error.error, 'close');
       },
     });
@@ -97,7 +99,7 @@ export class CourseDetailsComponent {
       progress: this.progressValue,
     };
     this.courseService
-      .updateProgress(this.courseDetails.idcourses, this.userId, progressData)
+      .updateProgress(this.courseDetails.idcourses, this.userId!, progressData)
       .subscribe({
         next: (data) => {
           this.getCourseDetailById(this.courseDetails.idcourses);
