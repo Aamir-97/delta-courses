@@ -44,6 +44,12 @@ export class UserRegisterComponent {
     }
   }
 
+  onEnter(event: any) {
+    const keyBoardEvent = event as KeyboardEvent;
+    keyBoardEvent.preventDefault();
+    this.onSubmit();
+  }
+
   onSubmit() {
     if (this.registerForm.valid) {
       this.loaderVisible = true;

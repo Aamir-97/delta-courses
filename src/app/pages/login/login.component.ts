@@ -41,6 +41,12 @@ export class LoginComponent {
     this.authService.onLogout();
   }
 
+  onEnter(event: any) {
+    const keyBoardEvent = event as KeyboardEvent;
+    keyBoardEvent.preventDefault();
+    this.onSubmit();
+  }
+
   onSubmit() {
     if (this.loginForm.valid) {
       this.loaderVisible = true;
@@ -78,9 +84,9 @@ export class LoginComponent {
   navigateUserByRole() {
     const userRole = this.authService.getUserRole();
     if (userRole === 1) {
-      this.router.navigate(['/admin']);
+      this.router.navigate(['/admin/dashboard']);
     } else {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home/courses']);
     }
   }
 

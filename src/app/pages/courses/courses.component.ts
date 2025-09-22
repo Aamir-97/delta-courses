@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CoursesService } from '../../data/services/courses.service';
 import { CoursesModel } from '../../data/models/course.model';
 import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module';
@@ -32,6 +32,8 @@ export class CoursesComponent {
       },
     });
   }
+
+  @HostListener('click', ['$event'])
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {

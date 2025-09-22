@@ -19,7 +19,7 @@
                 mat-input
                 formControlName="name"
                 class="form-control"
-                (keydown.enter)="onSubmit()"
+                (keydown.enter)="onEnter($event)"
                 type="text"
               />
               <!-- <mat-error>Username is required</mat-error> -->
@@ -34,7 +34,7 @@
                 mat-input
                 formControlName="username"
                 class="form-control"
-                (keydown.enter)="onSubmit()"
+                (keydown.enter)="onEnter($event)"
                 type="text"
               />
               <!-- <mat-error>Username is required</mat-error> -->
@@ -53,7 +53,7 @@
                 placeholder="password"
                 class="form-control"
                 type="password"
-                (keydown.enter)="onSubmit()"
+                (keydown.enter)="onEnter($event)"
               />
               <!-- <mat-error>Password is required</mat-error> -->
             </div>
@@ -71,7 +71,7 @@
                 placeholder="re-type password"
                 class="form-control"
                 type="password"
-                (keydown.enter)="onSubmit()"
+                (keydown.enter)="onEnter($event)"
               />
               <mat-checkbox [checked]="showPassword" (click)="myFunction()">
                 Show Password
