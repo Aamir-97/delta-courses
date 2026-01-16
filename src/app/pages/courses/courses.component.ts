@@ -1,7 +1,7 @@
-import { Component, HostListener } from '@angular/core';
-import { CoursesService } from '../../data/services/courses.service';
-import { CoursesModel } from '../../data/models/course.model';
-import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module';
+import { Component } from '@angular/core';
+import { CoursesService } from '../../data/services/courses.service.js';
+import { CoursesModel } from '../../data/models/course.model.js';
+import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module.js';
 import { RouterLink } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -23,19 +23,17 @@ export class CoursesComponent {
 
   ngOnInit() {
     this.courseSerice.getAllCourses().subscribe({
-      next: (data) => {
+      next: (data: any) => {
         this.allCourses = data.courses.courses;
         this.allCoursesCopy = data.courses.courses;
       },
-      error: (error) => {
+      error: (error: any) => {
         this.openSnackBar('Error loading courses', 'Close');
       },
     });
   }
 
-  @HostListener('click', ['$event'])
-
-  openSnackBar(message: string, action: string) {
+  openSnackBar(message: string, action?: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
     });

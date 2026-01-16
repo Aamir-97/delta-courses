@@ -1,6 +1,6 @@
-import { ProfileService } from './../../data/services/profile.service';
+import { ProfileService } from './../../data/services/profile.service.js';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MaterialUiModule } from './../../global/module/material-ui/material-ui.module';
+import { MaterialUiModule } from './../../global/module/material-ui/material-ui.module.js';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
@@ -68,7 +68,7 @@ export class UserRegisterComponent {
           password: this.registerForm.value.password,
         };
         this.profileService.saveUser(data).subscribe({
-          next: (response) => {
+          next: (_response: any) => {
             this.loaderVisible = false;
             this.registerForm.reset();
             this.openSnackBar(
@@ -77,7 +77,7 @@ export class UserRegisterComponent {
             );
             this.router.navigate(['/login']);
           },
-          error: (error) => {
+          error: (error: any) => {
             this.loaderVisible = false;
             this.errorMessage = error.error.error;
           },
@@ -89,7 +89,7 @@ export class UserRegisterComponent {
     this.registerForm.valid;
   }
 
-  openSnackBar(message: string, action: string) {
+  openSnackBar(message: string, action?: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
     });

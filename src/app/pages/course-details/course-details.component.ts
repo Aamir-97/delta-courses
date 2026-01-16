@@ -1,13 +1,13 @@
-import { AuthService } from './../../data/services/interceptors/auth.service';
+import { AuthService } from './../../data/services/interceptors/auth.service.js';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CoursesService } from '../../data/services/courses.service';
+import { CoursesService } from '../../data/services/courses.service.js';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module';
+import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module.js';
 import {
   CourseByUserIdModel,
   CourseDetailModel,
-} from '../../data/models/course.model';
+} from '../../data/models/course.model.js';
 
 @Component({
   selector: 'app-course-details',
@@ -40,17 +40,17 @@ export class CourseDetailsComponent {
 
   getCourseDetailById(courseId: number) {
     this.courseService.getCourseById(courseId).subscribe({
-      next: (value) => {
+      next: (value: any) => {
         this.courseDetails = value.courses[0];
         this.getEnrolledCourses(this.userId!);
       },
-      error: (err) => {
+      error: (err: any) => {
         this.openSnackBar('', 'close');
       },
     });
   }
 
-  openSnackBar(message: string, action: string) {
+  openSnackBar(message: string, action?: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
@@ -61,11 +61,11 @@ export class CourseDetailsComponent {
       userId: this.userId,
     };
     this.courseService.enrollCourseService(courseId, userIdData).subscribe({
-      next: (value) => {
+      next: (value: any) => {
         this.getCourseDetailById(courseId);
         this.openSnackBar('Enrolled successfully', 'close');
       },
-      error: (err) => {
+      error: (err: any) => {
         this.openSnackBar(err.error.error, 'close');
       },
     });
@@ -73,11 +73,11 @@ export class CourseDetailsComponent {
 
   getEnrolledCourses(userId: number) {
     this.courseService.getEnrolledCourses(userId).subscribe({
-      next: (data) => {
+      next: (data: any) => {
         this.enrolledCourses = data.courses;
         this.checkForEnrollment();
       },
-      error: (err) => {
+      error: (err: any) => {
         this.openSnackBar(err.error.error, 'Close');
       },
     });
@@ -101,11 +101,11 @@ export class CourseDetailsComponent {
     this.courseService
       .updateProgress(this.courseDetails.idcourses, this.userId!, progressData)
       .subscribe({
-        next: (data) => {
+        next: (data: any) => {
           this.getCourseDetailById(this.courseDetails.idcourses);
           this.openSnackBar('Progress updated successfully', 'Close');
         },
-        error: (err) => {
+        error: (err: any) => {
           this.openSnackBar(err.error.error, 'Close');
         },
       });

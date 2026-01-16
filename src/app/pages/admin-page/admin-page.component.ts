@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ToolbarComponent } from '../toolbar/toolbar.component';
-import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module';
+import { ToolbarComponent } from '../toolbar/toolbar.component.js';
+import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module.js';
 import { RouterOutlet } from '@angular/router';
 
 @Component({

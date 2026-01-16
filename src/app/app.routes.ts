@@ -1,14 +1,14 @@
 import { Routes } from '@angular/router';
-import { HomePageComponent } from './pages/home-page/home-page.component';
-import { CoursesComponent } from './pages/courses/courses.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { CourseDetailsComponent } from './pages/course-details/course-details.component';
-import { LoginComponent } from './pages/login/login.component';
-import { authGuard } from './global/guards/auth.guard';
-import { UserRegisterComponent } from './pages/user-register/user-register.component';
-import { AdminPageComponent } from './pages/admin-page/admin-page.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { adminGuard } from './global/guards/admin.guard';
+import { HomePageComponent } from './pages/home-page/home-page.component.js';
+import { CoursesComponent } from './pages/courses/courses.component.js';
+import { ProfileComponent } from './pages/profile/profile.component.js';
+import { CourseDetailsComponent } from './pages/course-details/course-details.component.js';
+import { LoginComponent } from './pages/login/login.component.js';
+import { authGuard } from './global/guards/auth.guard.js';
+import { UserRegisterComponent } from './pages/user-register/user-register.component.js';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component.js';
+import { DashboardComponent } from './pages/dashboard/dashboard.component.js';
+import { adminGuard } from './global/guards/admin.guard.js';
 
 export const routes: Routes = [
   {

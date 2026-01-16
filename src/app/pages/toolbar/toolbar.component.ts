@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module';
+import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module.js';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../data/services/interceptors/auth.service';
+import { AuthService } from '../../data/services/interceptors/auth.service.js';
 
 @Component({
   selector: 'app-toolbar',

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module';
+import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module.js';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ProfileService } from '../../data/services/profile.service';
+import { ProfileService } from '../../data/services/profile.service.js';
 import { formatDate } from '@angular/common';
-import { ProfileSaveModel } from '../../data/models/profile.model';
+import { ProfileSaveModel } from '../../data/models/profile.model.js';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CoursesService } from '../../data/services/courses.service';
-import { CourseByUserIdModel } from '../../data/models/course.model';
-import { AuthService } from '../../data/services/interceptors/auth.service';
+import { CoursesService } from '../../data/services/courses.service.js';
+import { CourseByUserIdModel } from '../../data/models/course.model.js';
+import { AuthService } from '../../data/services/interceptors/auth.service.js';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -113,7 +113,7 @@ export class ProfileComponent {
     });
   }
 
-  openSnackBar(message: string, action: string) {
+  openSnackBar(message: string, action?: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
     });

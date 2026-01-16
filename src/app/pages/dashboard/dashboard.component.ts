@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, Type } from '@angular/core';
-import { Theme } from '../../global/shared/theme.model';
+import { Theme } from '../../global/shared/theme.model.js';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
-import { DashboardService } from '../../data/services/dashboard.service';
+import { DashboardService } from '../../data/services/dashboard.service.js';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -33,7 +33,7 @@ export class DashboardComponent {
 
   getCouresEnrolled() {
     this.dashboardService.getCoursesEnrolled().subscribe({
-      next: (response) => {
+      next: (response: any) => {
         const enrolledCourses = response.courses.map((course: any) => {
           return course.course_name;
         });
@@ -54,7 +54,7 @@ export class DashboardComponent {
         // this.barChartData.datasets[0].data = enrolledCoursesCount;
         this.cdf.detectChanges();
       },
-      error: (error) => {
+      error: (error: any) => {
         this.openSnackBar(error.error.error, 'Close');
       },
     });
@@ -62,7 +62,7 @@ export class DashboardComponent {
 
   getUserCourseProgress() {
     this.dashboardService.getUserCourseProgerss().subscribe({
-      next: (response) => {
+      next: (response: any) => {
         // Extract unique course names
         const uniqueCourseNames = [
           ...new Set(response.courses.map((course: any) => course.course_name)),
@@ -97,7 +97,7 @@ export class DashboardComponent {
         // this.lineChartData.datasets = groupedData;
         this.cdf.detectChanges();
       },
-      error: (error) => {
+      error: (error: any) => {
         this.openSnackBar(error.error.error, 'Close');
       },
     });
@@ -184,7 +184,7 @@ export class DashboardComponent {
     responsive: true,
   };
 
-  openSnackBar(message: string, action: string) {
+  openSnackBar(message: string, action?: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
     });

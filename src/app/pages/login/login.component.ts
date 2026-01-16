@@ -1,9 +1,9 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module';
+import { MaterialUiModule } from '../../global/module/material-ui/material-ui.module.js';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { LoginService } from '../../data/services/login.service';
-import { AuthService } from '../../data/services/interceptors/auth.service';
+import { LoginService } from '../../data/services/login.service.js';
+import { AuthService } from '../../data/services/interceptors/auth.service.js';
 
 @Component({
   selector: 'app-login',
